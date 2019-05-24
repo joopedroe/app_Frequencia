@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>área admin</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <br>
+  <h2>{{ funcionario1.nome }}</h2>
+  <h4>Cargo: {{ funcionario1.cargo }}</h4>
+  <p>Lista de seus subordinados</p>  
+  <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Status
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Consistente</a>
+          <a class="dropdown-item" href="#">Inconsistente</a>
+        </div>
+      </div>          
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>NOME</th>
+        <th>DATA</th>
+        <th>IP COMPUTADOR</th>
+        <th>STATUS</th>
+      </tr>
+    </thead>
+    <tbody>
+       {% for fre in frequencias %}
+       <tr>    
+        <td>{{ fre }}</td>
+        <td>{{ fre.data }}</td>
+        <td>{{ fre.ipCom }}</td>
+        <td>{{ fre.status }}</td>
+      </tr>
+      {% endfor %}
+      
+    </tbody>
+  </table>
+  <br>
+  <a href="http://localhost:8000/sair/"><h2>
+        <button type="button" class="btn btn-danger">Sair</button>  
+    </h2></a>
+</div> 
+
+
+
+
+
+</body>
+</html>
