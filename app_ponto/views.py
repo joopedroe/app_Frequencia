@@ -10,7 +10,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required,permission_required
 # Create your views here.
 
-
 def ValidaHorario(horario1,horario2,tolerancia):
     hora1=horario1.split(':')
     hora2=horario2.split(":")
