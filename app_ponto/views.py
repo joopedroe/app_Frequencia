@@ -110,9 +110,8 @@ def FrequenciaFuncionario(request,idF):
     return render(request, 'app_ponto/areaAdmin.html', {'frequencias': frequencias,"funcionario1":funcionario1})
 
 def RegistroJust(just,id):
-    id=int(id)
     funcionario1=Funcionario.objects.get(usuario__id__exact=id)
-    print(funcionario1)
+    print(id)
     idFuncionario=funcionario1.id
     frequen=Frequencia.objects.filter(fucionario__id__exact=idFuncionario)
     data_atual = datetime.now()
@@ -122,13 +121,15 @@ def RegistroJust(just,id):
             i.justificativa=just
             i.save()
 
-def CadastroJust(request,id):
+def CadastroJust(request):
     if request.method == "POST":
         form=JustificativaForm(request.POST)
         if form.is_valid():  
             form.save()
             justificativas=Justificativa.objects.all()
             x=len(justificativas)-1
+            usuario=request.user
+            id=usuario.id
             RegistroJust(justificativas[x],id)
             return redirect('login_sucesso')
     else:

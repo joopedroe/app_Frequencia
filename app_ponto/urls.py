@@ -14,5 +14,5 @@ urlpatterns=[
     path('sair/',logout_user,name='logout'),
     path('area/admin/<int:idF>/', FrequenciaFuncionario,name='fequenciaFuncionario'),
     path('login/conta/<str:ponto>',user_login,name='login'),
-    path('nova/cadastro/<int:id>',CadastroJust,name='CadastroJust'),
+    path('nova/cadastro/',CadastroJust,name='CadastroJust'),
 ]
