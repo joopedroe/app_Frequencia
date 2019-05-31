@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView,TemplateView
 from django.http import HttpResponseRedirect,HttpResponse
 from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm
+from .forms import LoginForm, JustificativaForm
 from .models import *
 from datetime import datetime, timedelta
 import socket
@@ -63,7 +63,9 @@ def Registro(id):
 
 @login_required(login_url='http://localhost:8000/login/ponto')
 def login_sucesso(request):
-    return render(request, 'app_ponto/login_sucesso.html')
+    usuario=request.user
+    print(usuario)
+    return render(request, 'app_ponto/login_sucesso.html',{'usuario':usuario})
 
 def logout_user(request):
     logout(request)
@@ -107,3 +109,28 @@ def FrequenciaFuncionario(request,idF):
     frequencias=Frequencia.objects.filter(fucionario__supervisor__id__exact=idSupervisor)
     return render(request, 'app_ponto/areaAdmin.html', {'frequencias': frequencias,"funcionario1":funcionario1})
 
+def RegistroJust(just,id):
+    id=int(id)
+    funcionario1=Funcionario.objects.get(usuario__id__exact=id)
+    print(funcionario1)
+    idFuncionario=funcionario1.id
+    frequen=Frequencia.objects.filter(fucionario__id__exact=idFuncionario)
+    data_atual = datetime.now()
+    data_em_texto=data_atual.strftime('%Y-%m-%d')
+    for i in frequen:
+        if str(i.data) == data_em_texto:
+            i.justificativa=just
+            i.save()
+
+def CadastroJust(request,id):
+    if request.method == "POST":
+        form=JustificativaForm(request.POST)
+        if form.is_valid():  
+            form.save()
+            justificativas=Justificativa.objects.all()
+            x=len(justificativas)-1
+            RegistroJust(justificativas[x],id)
+            return redirect('login_sucesso')
+    else:
+        form=JustificativaForm()
+    return render (request,'app_ponto/CadastroFre.html',{'form':form})

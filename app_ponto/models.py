@@ -43,6 +43,9 @@ class status(models.Model):
 class Justificativa(models.Model):
     justificativa=models.TextField(null=True,blank=True)
 
+    def __str__(self):
+        return self.justificativa
+
 class Frequencia(models.Model):
     data=models.DateField()
     horario_entrada_1=models.TimeField(null=True,blank=True)
